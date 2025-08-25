@@ -20,9 +20,6 @@ int main(void)
     int sentences = S_in100(text);
 
 
-    printf("%i", letters);
-
-
     int result = coleman_alg(letters, sentences);
 
     if (result >= 16)
@@ -44,39 +41,64 @@ int main(void)
 int L_in100(string text)
 {
 
-    int L = 0;
-    int sum = 0;
+    int letter = 0;
+    int sum_word = 1;
 
-    
+
 
     for (int i = 0, n = strlen(text); i < n; i++)
     {
-        string word = text[i];
 
-        for (int j = 0, a = strlen(word); j > a; j++)
+        if (isalpha(text[i]))
         {
-            if (isalpha(word[j]))
-            {
-
-                sum++;
-
-            }
+            letter++;
         }
+        else if (isspace(text[i]))
+        {
+            sum_word++;
+        }
+
     }
 
-    L = (sum * 100) / sum;
+    int L = (letter * 100) / sum_word;
 
     return L;
 
 }
 
-//x*100/x
 
 int S_in100(string text)
 {
 
+    int end_count = 0;
+    int sum_word = 1;
 
-    return 40;
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+
+        if ('.' == text[i])
+        {
+            end_count++;
+        }
+        else if ('!' == text[i])
+        {
+            end_count++;
+        }
+        else if ('?' == text[i])
+        {
+            end_count++;
+        }
+        else if (isspace(text[i]))
+        {
+            sum_word++;
+        }
+
+    }
+
+    int S = end_count * 100 /sum_word;
+
+
+    return S;
 
 }
 
