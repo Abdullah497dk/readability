@@ -5,9 +5,9 @@
 #include <math.h>
 
 
-int L_in100(string text);
-int S_in100(string text);
-int coleman_alg(int L, int S);
+
+
+int coleman_alg(int L, int W, int S);
 
 
 int main(void)
@@ -15,12 +15,28 @@ int main(void)
 
     string text = get_string("Text: ");
 
+    int letters = 0;
+    int words = 1;
+    int sentences = 0;
 
-    int letters = L_in100(text);
-    int sentences = S_in100(text);
+    for (int i = 0, n = strlen(text); i < n; i++)
+    {
+        if (isalpha(text[i]))
+        {
+            letters++;
+        }
+        else if (isspace(text[i]))
+        {
+            words++;
+        }
+        else if ('.' == text[i] || '!' == text[i] || '?' == text[i])
+        {
+            sentences++;
+        }
+    }
 
 
-    int result = coleman_alg(letters, sentences);
+    int result = coleman_alg(letters, words, sentences);
 
     if (result >= 16)
     {
@@ -38,75 +54,14 @@ int main(void)
 }
 
 
-int L_in100(string text)
+
+int coleman_alg(int L, int W, int S)
 {
 
-    int letter = 0;
-    int sum_word = 1;
+    float L_in100 = (float) (L * 100) / W;
+    float S_in100 = (float) (S * 100) / W;
 
-
-
-    for (int i = 0, n = strlen(text); i < n; i++)
-    {
-
-        if (isalpha(text[i]))
-        {
-            letter++;
-        }
-        else if (isspace(text[i]))
-        {
-            sum_word++;
-        }
-
-    }
-
-    int L = (letter * 100) / sum_word;
-
-    return L;
-
-}
-
-
-int S_in100(string text)
-{
-
-    int end_count = 0;
-    int sum_word = 1;
-
-    for (int i = 0, n = strlen(text); i < n; i++)
-    {
-
-        if ('.' == text[i])
-        {
-            end_count++;
-        }
-        else if ('!' == text[i])
-        {
-            end_count++;
-        }
-        else if ('?' == text[i])
-        {
-            end_count++;
-        }
-        else if (isspace(text[i]))
-        {
-            sum_word++;
-        }
-
-    }
-
-    int S = end_count * 100 /sum_word;
-
-
-    return S;
-
-}
-
-
-int coleman_alg(int L, int S)
-{
-
-    float index = 0.0588 * L - 0.296 * S - 15.8;
+    float index = 0.0588 * L_in100 - 0.296 * S_in100 - 15.8;
 
     int x = round(index);
     return x;
