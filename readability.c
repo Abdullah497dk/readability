@@ -44,21 +44,39 @@ int main(void)
 int L_in100(string text)
 {
 
-    for (int i = 0 n = strlen(text); i < n; i++)
+    int L = 0;
+    int sum = 0;
+
+    
+
+    for (int i = 0, n = strlen(text); i < n; i++)
     {
-        text[1]
+        string word = text[i];
+
+        for (int j = 0, a = strlen(word); j > a; j++)
+        {
+            if (isalpha(word[j]))
+            {
+
+                sum++;
+
+            }
+        }
     }
 
-    return 0;
+    L = (sum * 100) / sum;
+
+    return L;
 
 }
 
+//x*100/x
 
 int S_in100(string text)
 {
 
 
-    return 0;
+    return 40;
 
 }
 
